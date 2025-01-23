@@ -1,6 +1,7 @@
 package br.cefet.mercado.controller;
 
 import br.cefet.mercado.domain.Produto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -9,7 +10,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/produtos")
 public class ProdutoController {
-    private List<Produto> produtos;
+    private long count = 0;
+    private List<Produto> produtos = new ArrayList<>();
 
     @GetMapping({"", "/"})
     public List<Produto> getProdutos() {
@@ -29,12 +31,14 @@ public class ProdutoController {
     @PostMapping({"", "/"})
     public Produto createProduto(@RequestBody Produto produto) {
         produtos.add(produto);
+        count++;
         return produto;
     }
 
     @DeleteMapping("/{id}")
     public boolean deleteProdutoById(@PathVariable Long id) {
         Produto produto = getProdutosById(id);
+        count--;
         return produtos.remove(produto);
     }
 
