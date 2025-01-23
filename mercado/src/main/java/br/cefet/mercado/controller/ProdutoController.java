@@ -31,7 +31,7 @@ public class ProdutoController {
     @PostMapping({"", "/"})
     public Produto createProduto(@RequestBody Produto produto) {
         produtos.add(produto);
-        count++;
+        produto.setId(++count);
         return produto;
     }
 
